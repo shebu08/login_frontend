@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./mix.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 const Login = () => {
   const [passShow , setpassShow] = useState(false)
   const [inpval, setinpval] = useState({
@@ -38,16 +38,17 @@ const Login = () => {
       // console.log("User Registration Succesfully")
       const res= await axios.post("http://localhost:8009/login",inpval);
       console.log(res);
-      // if(res.status === 201){
-      //   Swal.fire({
-      //     position: "center",
-      //     icon: "success",
-      //     title: "Your work has been saved",
-      //     showConfirmButton: false,
-      //     timer: 1500
-      //   });
-      //   setVal({...inpval, email:"", password:"",   })
-      // }
+      if(res.status === 201){
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 3000
+        });
+        localStorage.setItem("usersdatatoken", res.result.token)
+        setVal({...inpval, email:"", password:"",   })
+      }
     }
   }
   return (
